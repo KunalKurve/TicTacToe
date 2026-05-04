@@ -1,29 +1,38 @@
 package strategies;
 
-import models.Board;
-import models.Player;
+
+import models.Move;
 import models.Symbol;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class ColumnWinningStrategy implements WinningStrategy{
 
-    private HashMap[] colMaps;
+    private int size;
+    private HashMap<Symbol, Integer> colMaps[];
 
     public ColumnWinningStrategy(int size){
-
+        this.size = size;
         colMaps = new HashMap[size];
 
         for(int i=0; i<size; i++){
-             colMaps[i] = new HashMap<Symbol, Integer>();
-
+             colMaps[i] = new HashMap<>();
         }
     }
 
     @Override
-    public Player checkWinner(Board board) {
-        return null;
+    public boolean checkWinner(Move move) {
+
+        int currCol = move.getCell().getColVal();
+        Symbol currPlayerSymbol = move.getPlayer().getSymbol();
+
+        HashMap currColMap = colMaps[currCol];
+
+        currColMap.put(
+                currPlayerSymbol,
+                (int) currColMap.getOrDefault(currPlayerSymbol, 0) + 1
+        );
+
+        return currColMap.get(currPlayerSymbol).equals(size);
     }
 }

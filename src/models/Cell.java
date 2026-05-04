@@ -4,32 +4,32 @@ import models.enums.CellState;
 
 public class Cell {
 
-    private int row_no;
-    private int col_no;
+    private int rowVal;
+    private int colVal;
     private Player player;
     private CellState cellState;
 
-    public Cell(int row_no, int col_no) {
-        this.row_no = row_no;
-        this.col_no = col_no;
+    public Cell(int rowVal, int colVal) {
+        this.rowVal = rowVal;
+        this.colVal = colVal;
         this.player = null;
         this.cellState = CellState.EMPTY;
     }
 
-    public int getRow_no() {
-        return row_no;
+    public int getRowVal() {
+        return rowVal;
     }
 
-    public void setRow_no(int row_no) {
-        this.row_no = row_no;
+    public void setRowVal(int rowVal) {
+        this.rowVal = rowVal;
     }
 
-    public int getCol_no() {
-        return col_no;
+    public int getColVal() {
+        return colVal;
     }
 
-    public void setCol_no(int col_no) {
-        this.col_no = col_no;
+    public void setColVal(int colVal) {
+        this.colVal = colVal;
     }
 
     public Player getPlayer() {
