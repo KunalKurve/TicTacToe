@@ -74,4 +74,16 @@ public class Game {
     public void setWinner(Player winner) {
         this.winner = winner;
     }
+
+//    public Move makeMove() {
+//        Move move = new Move(, board.getGrid()[1][0]);
+//        return move;
+//    }
+
+    public boolean checkWinner(Move move) {
+        for(WinningStrategy strategy : winningStrategies){
+            strategy.checkWinner(move);
+        }
+        return false;
+    }
 }

@@ -1,13 +1,26 @@
 package controller;
 
 import models.Game;
+import models.Move;
+import models.Player;
+import strategies.WinningStrategy;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class GameController {
 
-    public Game playNewGame(){
-        return new Game(3, new ArrayList<>(), new ArrayList<>());
+    public Game playNewGame(int size,
+                            List<Player> players,
+                            List<WinningStrategy> winStrategies){
+        return new Game(size, players, winStrategies);
     }
 
+
+    public void displayGame(Game game) {
+        game.getBoard().displayBoard();
+    }
+
+//    public Move makeMove(Game game) {
+//        game.makeMove();
+//    }
 }
