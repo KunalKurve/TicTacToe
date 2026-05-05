@@ -15,8 +15,12 @@ public class GameController {
     public Game playNewGame(int size,
                             List<Player> players,
                             List<WinningStrategy> winStrategies){
-        // to implement builder pattern
-        return new Game(size, players, winStrategies);
+
+        return Game.getBuilder()
+                .setSize(size)
+                .setPlayers(players)
+                .setWinningStrategies(winStrategies)
+                .build();
     }
 
     // display method
@@ -26,7 +30,6 @@ public class GameController {
 
     // make moves method
     public void makeMove(Game game) {
-        // to implement make move
         game.makeMove(game.getBoard());
     }
 
@@ -37,7 +40,6 @@ public class GameController {
 
     // undo moves method
     public void undoMove(Game game){
-//        to implement
         game.undoMove();
     }
 
@@ -48,6 +50,8 @@ public class GameController {
 
     // get next player method
     public Player getNextPlayer(Game game){
+        // to use for passing row and col values from Client
+        // if player is Human
         return game.getPlayers().get(game.getNextMovePlayer());
     }
 }
