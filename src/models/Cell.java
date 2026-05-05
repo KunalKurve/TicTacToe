@@ -50,7 +50,7 @@ public class Cell {
 
     public void displayCell() {
         if(cellState.equals(CellState.EMPTY)){
-            System.out.print("| " + " |");
+            System.out.print("| - |");
         }
         else{
             System.out.print("| " + player.getSymbol() + " |");

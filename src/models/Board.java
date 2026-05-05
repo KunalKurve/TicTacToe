@@ -50,6 +50,7 @@ public class Board {
             for(int j=0; j<size; j++){
                 grid[i][j].displayCell();
             }
+            System.out.println();
         }
     }
 }
