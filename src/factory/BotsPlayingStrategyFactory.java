@@ -10,6 +10,7 @@ public class BotsPlayingStrategyFactory {
 
     public static BotsPlayingStrategy getBotsPlayingStrategy(BotDifficulty botDifficulty){
 
+        // Implemented the Factory Design Pattern
         if(botDifficulty.equals(BotDifficulty.EASY)){
             return new EasyPlayingStrategy();
         }
