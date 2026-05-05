@@ -1,12 +1,12 @@
 import controller.GameController;
 import models.*;
 import models.enums.GameState;
-import models.enums.PlayerType;
 import strategies.RowWinningStrategy;
 import strategies.WinningStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class GameClient {
     public static void main(String[] args) {
@@ -32,22 +32,31 @@ public class GameClient {
         //display board
         gameController.displayGame(game);
 
-        while (game.getGameState().equals(GameState.IN_PROGRESS)){
+        Scanner scanner = new Scanner(System.in);
 
-            //make move
-//            Move move = gameController.makeMove(game);
-//            //display board
-//            gameController.displayGame(game);
-//            //check winner
-//            if(gameController.checkWinner(move)){
-//                game.setGameState(GameState.COMPLETED);
-//                game.setWinner(move.getPlayer());
-//            }
-//            else{
-//                game.setGameState(GameState.DRAW);
-//            }
+        while (game.getGameState().equals(GameState.IN_PROGRESS)){
+            // Flow
+            // 1. display board
+            gameController.displayGame(game);
+
+            // 2. Ask Player if it wants to make move or undo move
+            System.out.println("Type M to make move");
+            System.out.println("Type U to undo move");
+            String input = scanner.next();
+            if(input.equalsIgnoreCase("m")){
+                gameController.makeMove(game);
+            }
+            else gameController.undoMove(game);
+
         }
 
-
+        if(gameController.getGameState(game).equals(GameState.COMPLETED)){
+            Player winner = gameController.getWinner(game);
+            System.out.println("Congratulations " + winner.getName() + " has Won!");
+        }
+        else{
+            gameController.displayGame(game);
+            System.out.println("Game is Drawn!");
+        }
     }
 }
