@@ -5,13 +5,14 @@ import strategies.WinningStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Game {
 
     private Board board;
     private List<Player> players;
-    private List<Move> moveHistory;
-    private int nextMovePlayer;
+    private List<Move> moveHistory; // undo feature
+    private int nextMovePlayer; // player rotation
     private GameState gameState;
     private Player winner;
     private List<WinningStrategy> winningStrategies;
@@ -75,15 +76,24 @@ public class Game {
         this.winner = winner;
     }
 
-//    public Move makeMove() {
-//        Move move = new Move(, board.getGrid()[1][0]);
-//        return move;
-//    }
+    public void makeMove(Board board) {
+        Player currentPlayer = players.get(nextMovePlayer);
+        System.out.println("It's " + currentPlayer.getName() + "'s turn to make move");
+        nextMovePlayer = (nextMovePlayer + 1) % players.size();
+        Move move = currentPlayer.makeMove(board);
+        moveHistory.add(move);
+    }
 
-    public boolean checkWinner(Move move) {
+    public boolean checkWinner(Board board, Move move) {
         for(WinningStrategy strategy : winningStrategies){
-            strategy.checkWinner(move);
+            if(strategy.checkWinner(move)){
+                return true;
+            }
         }
         return false;
+    }
+
+    public void undoMove(){
+
     }
 }
