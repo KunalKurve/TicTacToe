@@ -1,5 +1,6 @@
 package models;
 
+import models.enums.CellState;
 import models.enums.GameState;
 import strategies.WinningStrategy;
 
@@ -79,12 +80,23 @@ public class Game {
     public void makeMove(Board board) {
         Player currentPlayer = players.get(nextMovePlayer);
         System.out.println("It's " + currentPlayer.getName() + "'s turn to make move");
-        nextMovePlayer = (nextMovePlayer + 1) % players.size();
+
         Move move = currentPlayer.makeMove(board);
         moveHistory.add(move);
+
+        nextMovePlayer = (nextMovePlayer + 1) % players.size();
+
+        if(checkWinner(move)){
+            this.winner = currentPlayer;
+            this.setGameState(GameState.COMPLETED);
+        }
+        else if(moveHistory.size() == board.getSize() * board.getSize()){
+            this.winner = null;
+            this.setGameState(GameState.DRAW);
+        }
     }
 
-    public boolean checkWinner(Board board, Move move) {
+    public boolean checkWinner(Move move) {
         for(WinningStrategy strategy : winningStrategies){
             if(strategy.checkWinner(move)){
                 return true;
@@ -94,6 +106,23 @@ public class Game {
     }
 
     public void undoMove(){
+        if(this.moveHistory.isEmpty()){
+            System.out.println("No moves to undo");
+        }
+
+        Move move = moveHistory.removeLast();
+        Cell cell = move.getCell();
+        cell.setCellState(CellState.EMPTY);
+        cell.setPlayer(null);
+
+        nextMovePlayer = (nextMovePlayer-1)%players.size();
+
+        for (WinningStrategy strategy : winningStrategies){
+            strategy.handleUndo(move);
+        }
+
+        this.winner = null;
+        this.setGameState(GameState.IN_PROGRESS);
 
     }
 }

@@ -35,4 +35,16 @@ public class RowWinningStrategy implements WinningStrategy{
 
         return currRowMap.get(currPlayerSymbol) == size;
     }
+
+    @Override
+    public void handleUndo(Move move) {
+
+        int currRow = move.getCell().getRowVal();
+        Symbol currPlayerSymbol = move.getPlayer().getSymbol();
+
+        HashMap<Symbol, Integer> currRowMap = rowMaps.get(currRow);
+
+        currRowMap.put(currPlayerSymbol, currRowMap.get(currPlayerSymbol)-1);
+
+    }
 }

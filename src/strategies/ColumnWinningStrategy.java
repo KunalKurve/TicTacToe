@@ -35,4 +35,15 @@ public class ColumnWinningStrategy implements WinningStrategy{
 
         return currColMap.get(currPlayerSymbol).equals(size);
     }
+
+    @Override
+    public void handleUndo(Move move) {
+
+        int currCol = move.getCell().getColVal();
+        Symbol currPlayerSymbol = move.getPlayer().getSymbol();
+
+        HashMap currColMap = colMaps[currCol];
+
+        currColMap.put(currPlayerSymbol, (int) currColMap.get(currPlayerSymbol)-1);
+    }
 }

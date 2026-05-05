@@ -44,4 +44,25 @@ public class DiagonalWinningStrategy implements WinningStrategy{
 
         return false;
     }
+
+    @Override
+    public void handleUndo(Move move) {
+        int currentRow = move.getCell().getRowVal();
+        int currentCol = move.getCell().getColVal();
+        Symbol currPlayerSymbol = move.getPlayer().getSymbol();
+
+        // Player marked on main-diagonal
+        if(currentRow == currentCol){
+            mainDiagMap.put(currPlayerSymbol,
+                    mainDiagMap.get(currPlayerSymbol)-1);
+        }
+
+        // Player marked on anti-diagonal
+        if(currentRow + currentCol == size-1){
+            antiDiagMap.put(currPlayerSymbol,
+                    antiDiagMap.get(currPlayerSymbol)-1);
+        }
+
+
+    }
 }
